@@ -4,36 +4,50 @@
 
 ---
 
+
+## 📲 Download App
+
+👉 Try Drivon on your device:
+[⬇️ Download APK](https://github.com/abhijeetmaan/Drivon-app/releases/download/v1.0.0/app-release.apk)
+
+
+*(Go to Releases → Download latest APK)*
+
+👉 View all releases:  
+https://github.com/abhijeetmaan/Drivon-app/releases
+
+---
+
 ## ✨ Overview
 
 Drivon is a modern, beautifully designed vehicle management app that helps you:
 
-- Track expenses (fuel, service, insurance)
-- Manage multiple vehicles
-- Analyze monthly costs
-- Use voice commands for quick actions
-- Store important documents
-- Get smart insights about your spending
+* Track expenses (fuel, service, insurance)
+* Manage multiple vehicles
+* Analyze monthly costs
+* Use voice commands for quick actions
+* Store important documents
+* Get smart insights about your spending
 
 ---
 
 ## 🔥 Features
 
-- 🚗 Multi-vehicle management
-- 💸 Expense tracking with filters
-- 📊 Smart analytics & insights
-- 🎤 Voice assistant (add expense via voice)
-- 📁 Document storage (insurance, PUC, etc.)
-- 🔔 Service reminders
-- 🎨 Premium UI (CRED-style design + animations)
+* 🚗 Multi-vehicle management
+* 💸 Expense tracking with filters
+* 📊 Smart analytics & insights
+* 🎤 Voice assistant (add expense via voice)
+* 📁 Document storage (insurance, PUC, etc.)
+* 🔔 Service reminders
+* 🎨 Premium UI (CRED-style design + animations)
 
 ---
 
 ## 🧠 Smart Insights
 
-- Compare vehicles cost
-- Monthly expense breakdown
-- AI-based suggestions
+* Compare vehicle costs
+* Monthly expense breakdown
+* AI-based suggestions
 
 ---
 
@@ -49,18 +63,18 @@ Drivon is a modern, beautifully designed vehicle management app that helps you:
 
 ## ⚙️ Tech Stack
 
-- Flutter (UI)
-- Dart
-- Local Storage / Firebase (optional)
-- Speech-to-Text API
+* Flutter (UI)
+* Dart
+* Local Storage / Firebase (optional)
+* Speech-to-Text API
 
 ---
 
-## 🚀 Installation
+## 🚀 Installation (For Developers)
 
 ```bash
 git clone https://github.com/abhijeetmaan/Drivon-app.git
-cd drivon-app
+cd Drivon-app
 flutter pub get
 flutter run
 ```
@@ -69,10 +83,19 @@ flutter run
 
 ## 🎯 Roadmap
 
-- [ ] Cloud sync
-- [ ] AI insights upgrade
-- [ ] Dark/Light theme switch
-- [ ] Advanced analytics dashboard
+* [ ] Cloud sync
+* [ ] AI insights upgrade
+* [ ] Dark/Light theme switch
+* [ ] Advanced analytics dashboard
+
+---
+
+## 💼 Why This Project Stands Out
+
+* Real-world use case (vehicle expense tracking)
+* Clean architecture & scalable structure
+* Premium UI with animations & micro-interactions
+* Multi-feature integration (voice + analytics + storage)
 
 ---
 
