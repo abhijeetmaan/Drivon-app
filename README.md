@@ -8,7 +8,7 @@
 ## 📲 Download App
 
 👉 Try Drivon on your device:
-[⬇️ Download APK](https://github.com/abhijeetmaan/Drivon-app/releases/download/v1.0.0/app-release.apk)
+[⬇️ Download APK](https://github.com/abhijeetmaan/Drivon-app/releases/download/v1.0.1/app-release.apk)
 
 
 *(Go to Releases → Download latest APK)*
