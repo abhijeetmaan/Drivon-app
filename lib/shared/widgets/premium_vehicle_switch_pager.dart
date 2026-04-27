@@ -60,6 +60,7 @@ class _PremiumVehicleSwitchPagerState extends ConsumerState<PremiumVehicleSwitch
   late DeviceMotionService _motion;
   final ValueNotifier<int> _scrollActivityTick = ValueNotifier(0);
   late final Listenable _carouselListenable;
+  var _motionStarted = false;
   int _settledPage = 0;
   var _programmaticPageJump = false;
   bool _scrollListenerAttached = false;
@@ -115,6 +116,12 @@ class _PremiumVehicleSwitchPagerState extends ConsumerState<PremiumVehicleSwitch
     _settledPage = initial;
     _motion = ref.read(deviceMotionServiceProvider);
     _carouselListenable = Listenable.merge([_pageController, _motion, _scrollActivityTick]);
+  }
+
+  void _startMotionIfNeeded() {
+    if (_motionStarted) return;
+    _motionStarted = true;
+    _motion.start();
   }
 
   void _tryAttachCarouselScrollListener() {
@@ -195,7 +202,14 @@ class _PremiumVehicleSwitchPagerState extends ConsumerState<PremiumVehicleSwitch
       animateWhenReady();
     });
 
-    return Column(
+    return NotificationListener<ScrollNotification>(
+      onNotification: (n) {
+        if (n is ScrollStartNotification || n is UserScrollNotification) {
+          _startMotionIfNeeded();
+        }
+        return false;
+      },
+      child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ClipRRect(
@@ -312,6 +326,7 @@ class _PremiumVehicleSwitchPagerState extends ConsumerState<PremiumVehicleSwitch
         if (widget.vehicles.isNotEmpty)
           _PageDots(count: _itemCount, current: _settledPage.clamp(0, _itemCount - 1)),
       ],
+    ),
     );
   }
 

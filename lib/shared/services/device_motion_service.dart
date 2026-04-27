@@ -100,7 +100,8 @@ class DeviceMotionService extends ChangeNotifier {
 final deviceMotionServiceProvider = ChangeNotifierProvider<DeviceMotionService>((ref) {
   final service = DeviceMotionService();
   ref.onDispose(service.dispose);
-  service.start();
+  // Important: don't start sensors during bootstrap / before runApp().
+  // Widgets that actually render motion effects should call `start()`.
   return service;
 });
 

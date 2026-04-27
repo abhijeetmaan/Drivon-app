@@ -51,7 +51,7 @@ class _VoiceScreenState extends ConsumerState<VoiceScreen> with TickerProviderSt
     super.initState();
     _glowPulse = AnimationController(vsync: this, duration: const Duration(milliseconds: 1400))..repeat(reverse: true);
     _wave = AnimationController(vsync: this, duration: const Duration(milliseconds: 1200))..repeat();
-    unawaited(_initSpeech());
+    // Lazy init: initialize speech only when user taps the mic.
   }
 
   Future<void> _initSpeech() async {
@@ -109,6 +109,10 @@ class _VoiceScreenState extends ConsumerState<VoiceScreen> with TickerProviderSt
   Future<void> startListening() async {
     if (_isListening) return;
 
+    final permitted = await _ensureMicPermission();
+    if (!permitted) return;
+
+    // Initialize only after user intent + permission.
     if (!_speech.isAvailable) {
       await _initSpeech();
     }
@@ -119,9 +123,6 @@ class _VoiceScreenState extends ConsumerState<VoiceScreen> with TickerProviderSt
       setState(() => _statusHint = msg);
       return;
     }
-
-    final permitted = await _ensureMicPermission();
-    if (!permitted) return;
 
     if (!mounted) return;
     setState(() {

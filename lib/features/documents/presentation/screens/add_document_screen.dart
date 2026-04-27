@@ -52,6 +52,11 @@ class _AddDocumentScreenState extends ConsumerState<AddDocumentScreen> {
     return storage.isGranted;
   }
 
+  Future<bool> _ensureStoragePermission() async {
+    final status = await Permission.storage.request();
+    return status.isGranted;
+  }
+
   Future<void> _pickImage() async {
     final ok = await _ensureMediaPermission();
     if (!ok) {
@@ -80,26 +85,47 @@ class _AddDocumentScreenState extends ConsumerState<AddDocumentScreen> {
   }
 
   Future<void> _pickFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: const ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'webp'],
-      withData: false,
-    );
-    if (result == null || result.files.isEmpty) return;
-    final f = result.files.single;
-    if (f.path == null) return;
-    final name = f.name;
-    final lower = name.toLowerCase();
-    final kind = lower.endsWith('.pdf')
-        ? 'pdf'
-        : (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.webp'))
-            ? 'image'
-            : 'other';
-    setState(() {
-      _pickedPath = f.path;
-      _pickedOriginalName = name;
-      _pickedKind = kind;
-    });
+    final ok = await _ensureStoragePermission();
+    if (!ok) {
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Permission required'),
+          content: const Text('Please allow storage access to pick a file.'),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(ctx).pop(), child: const Text('OK')),
+          ],
+        ),
+      );
+      return;
+    }
+
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: const ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'webp'],
+        withData: false,
+      );
+      if (result == null || result.files.isEmpty) return;
+      final f = result.files.single;
+      if (f.path == null) return;
+      final name = f.name;
+      final lower = name.toLowerCase();
+      final kind = lower.endsWith('.pdf')
+          ? 'pdf'
+          : (lower.endsWith('.png') || lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.webp'))
+              ? 'image'
+              : 'other';
+      setState(() {
+        _pickedPath = f.path;
+        _pickedOriginalName = name;
+        _pickedKind = kind;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('File picker failed: $e')));
+    }
   }
 
   void _syncVehiclePick(List<Vehicle> vehicles) {
